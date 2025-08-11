@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Login - Medical Support Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="auth-ambient">
+        <div class="container auth-card">
+            <h1>Doctor Portal</h1>
+            <p class="auth-subtitle">Secure sign in for clinicians</p>
+
+            <form action="/doctor/login" method="post" class="stagger">
+                <div class="input-group floating">
+                    <input type="email" id="username" name="username" placeholder=" " required>
+                    <label for="username">Email</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <button type="submit" class="btn">Sign in</button>
+            </form>
+
+            <div class="form-footer">
+                <p><a href="/">Back to main page</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

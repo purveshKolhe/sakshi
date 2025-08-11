@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Sign Up - Medical Support Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="auth-ambient">
+        <div class="container auth-card wide">
+            <h1>Create Patient Account</h1>
+            <p class="auth-subtitle">Join and get personalized support</p>
+
+            <form action="/patient/signup" method="post" class="stagger two-col">
+                <div class="input-group floating">
+                    <input type="text" id="fullname" name="fullname" placeholder=" " required>
+                    <label for="fullname">Full Name</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="text" id="username" name="username" placeholder=" " required>
+                    <label for="username">Username</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email">Email</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="tel" id="phone" name="phone" placeholder=" " required>
+                    <label for="phone">Phone Number</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="text" id="address" name="address" placeholder=" " required>
+                    <label for="address">Address</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="date" id="dob" name="dob" placeholder=" " required>
+                    <label for="dob">Date of Birth</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected hidden></option>
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                        <option value="nonbinary">Non-binary</option>
+                        <option value="prefer_not">Prefer not to say</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <label for="gender">Gender</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="text" id="emergency_contact_name" name="emergency_contact_name" placeholder=" " required>
+                    <label for="emergency_contact_name">Emergency Contact Name</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="tel" id="emergency_contact_number" name="emergency_contact_number" placeholder=" " required>
+                    <label for="emergency_contact_number">Emergency Contact Number</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating full">
+                    <textarea id="medical_history" name="medical_history" placeholder=" "></textarea>
+                    <label for="medical_history">Medical History (optional)</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating full">
+                    <textarea id="medications" name="medications" placeholder=" "></textarea>
+                    <label for="medications">Ongoing Medications (optional)</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating full">
+                    <input type="text" id="invite_code" name="invite_code" placeholder=" " required>
+                    <label for="invite_code">Doctor's Invite Code</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="full" style="display:flex; align-items:center; gap:0.6rem; margin: 0.25rem 0 0.5rem 0;">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label for="consent" style="margin: 0;">I consent to AI-based chat analysis.</label>
+                </div>
+
+                <div class="full" style="margin-top: 0.5rem;">
+                    <button type="submit" class="btn" style="width: 100%;">Create account</button>
+                </div>
+            </form>
+
+            <div class="form-footer">
+                <p>Already have an account? <a href="/patient/login">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

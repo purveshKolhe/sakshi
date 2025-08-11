@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Medical Support Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Medical Support Platform</h1>
+        
+        <div class="role-selection">
+            <h2>I am a...</h2>
+            <a href="/patient/login" class="btn">Patient</a>
+            <a href="/doctor/login" class="btn">Doctor</a>
+        </div>
+
+        <div class="form-footer">
+            <p>New Patient? <a href="/patient/signup">Create an account</a></p>
+        </div>
+    </div>
+</body>
+</html>

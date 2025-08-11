@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Medical Support Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='2.0') }}">
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <!-- Apache ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"
+            onerror="(function(){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js';document.head.appendChild(s);})();"></script>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="dashboard-header">
+            <h1>Doctor Dashboard</h1>
+            <div class="theme-switcher">
+                <button class="theme-btn" data-theme="daylight"></button>
+                <button class="theme-btn" data-theme="midnight"></button>
+                <button class="theme-btn" data-theme="crimson-night"></button>
+                <button class="theme-btn" data-theme="arctic-mist"></button>
+            </div>
+            <a href="/logout" class="btn">Logout</a>
+        </div>
+
+        <div class="doctor-dashboard-layout">
+            <div id="patient-list-container">
+                <h2>Your Patients</h2>
+                <div id="patient-list">
+                    {% if patients %}
+                        <ul>
+                            {% for uid, patient in patients.items() %}
+                                <li>
+                                    <a href="#" class="patient-link" data-uid="{{ uid }}">{{ patient.fullname }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>You have no patients assigned to you yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="patient-details-container">
+                <div id="patient-details">
+                    <p>Select a patient to view their chat analysis.</p>
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h4>Sentiment Trend</h4>
+                            <canvas id="sentimentTrendChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Urgency Distribution</h4>
+                            <canvas id="urgencyDoughnutChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Emotion Analysis</h4>
+                            <canvas id="emotionRadarChart"></canvas>
+                        </div>
+                    </div>
+                    <div id="direct-message-container">
+                        <h3>Direct Message</h3>
+                        <textarea id="direct-message-input" placeholder="Write a message to the patient..."></textarea>
+                        <button id="send-direct-message-btn" class="btn">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/doctor.js') }}"></script>
+</body>
+</html>

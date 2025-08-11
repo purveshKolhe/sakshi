@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Medical Support Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='2.0') }}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="dashboard-header">
+            <h1>Patient Dashboard</h1>
+            <div class="theme-switcher">
+                <button class="theme-btn" data-theme="daylight"></button>
+                <button class="theme-btn" data-theme="midnight"></button>
+                <button class="theme-btn" data-theme="crimson-night"></button>
+                <button class="theme-btn" data-theme="arctic-mist"></button>
+            </div>
+            <a href="/logout" class="btn">Logout</a>
+        </div>
+        
+        <div class="dashboard-tabs">
+            <button class="tab-link pill active" data-tab="chat">AI Chat</button>
+            <button class="tab-link pill" data-tab="inbox">Doctor's Inbox</button>
+        </div>
+
+        <div id="chat" class="tab-content active">
+            <p>Welcome! This is your private space to chat with your AI assistant.</p>
+            <div id="chat-container">
+                <div id="chat-history">
+                    <!-- Chat messages will appear here -->
+                    <div class="chat-message ai typing-indicator">
+                        <div class="bubble">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type your message...">
+                    <button id="send-button" class="btn">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="inbox" class="tab-content">
+            <h2>Messages from your Doctor</h2>
+            <div id="inbox-messages">
+                <!-- Doctor messages will be loaded here -->
+            </div>
+            <div class="chat-input-area" style="margin-top:1rem;">
+                <input type="text" id="message-to-doctor" placeholder="Send a message to your doctor...">
+                <button id="send-to-doctor" class="btn">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

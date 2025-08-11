@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Login - Medical Support Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="auth-ambient">
+        <div class="container auth-card">
+            <h1>Welcome back</h1>
+            <p class="auth-subtitle">Sign in to your patient dashboard</p>
+
+            <form action="/patient/login" method="post" class="stagger">
+                <div class="input-group floating">
+                    <input type="email" id="username" name="username" placeholder=" " required>
+                    <label for="username">Email</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <div class="input-group floating">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                    <span class="focus-ring"></span>
+                </div>
+
+                <button type="submit" class="btn">Sign in</button>
+            </form>
+
+            <div class="form-footer">
+                <p>New here? <a href="/patient/signup">Create an account</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
