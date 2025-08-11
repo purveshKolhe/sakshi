@@ -1,0 +1,735 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ==========================================================================
+   Modern Theme Definitions
+   ========================================================================== */
+
+/* 1. Daylight (Default) */
+:root {
+    --primary-color: #007AFF;
+    --primary-color-rgb: 0, 122, 255;
+    --secondary-color: #34C759;
+    --accent-color: #FF9500;
+    --background-color: #F9F9F9;
+    --surface-color: #FFFFFF;
+    --text-color: #1d1d1f;
+    --text-color-secondary: #6e6e73;
+    --border-color: #EAEAEA;
+    --error-color: #FF3B30;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --shadow-color-hover: rgba(0, 0, 0, 0.1);
+}
+
+/* 2. Midnight */
+[data-theme="midnight"] {
+    --primary-color: #6A85FF;
+    --primary-color-rgb: 106, 133, 255;
+    --secondary-color: #30D158;
+    --accent-color: #FFD60A;
+    --background-color: #121212;
+    --surface-color: #1E1E1E;
+    --text-color: #EAEAEA;
+    --text-color-secondary: #A0A0A0;
+    --border-color: #2F2F2F;
+    --error-color: #FF453A;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --shadow-color-hover: rgba(0, 0, 0, 0.3);
+}
+
+/* 3. Crimson Night */
+[data-theme="crimson-night"] {
+    --primary-color: #FF4757;
+    --primary-color-rgb: 255, 71, 87;
+    --secondary-color: #1E90FF;
+    --accent-color: #F7B731;
+    --background-color: #1A1A1A;
+    --surface-color: #2C2C2C;
+    --text-color: #F5F5F5;
+    --text-color-secondary: #B0B0B0;
+    --border-color: #3D3D3D;
+    --error-color: #FF6B6B;
+    --shadow-color: rgba(0, 0, 0, 0.25);
+    --shadow-color-hover: rgba(0, 0, 0, 0.35);
+}
+
+/* 4. Arctic Mist */
+[data-theme="arctic-mist"] {
+    --primary-color: #5AC8FA;
+    --primary-color-rgb: 90, 200, 250;
+    --secondary-color: #AF52DE;
+    --accent-color: #FF9F0A;
+    --background-color: #F0F4F8;
+    --surface-color: #FFFFFF;
+    --text-color: #273444;
+    --text-color-secondary: #6C7A89;
+    --border-color: #DDE4E9;
+    --error-color: #EF4444;
+    --shadow-color: rgba(108, 122, 137, 0.1);
+    --shadow-color-hover: rgba(108, 122, 137, 0.15);
+}
+
+
+/* ==========================================================================
+   Base Styles & Animations
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Main Container & Layout
+   ========================================================================== */
+
+.container {
+    background-color: var(--surface-color);
+    padding: 3rem 3.5rem;
+    border-radius: 24px;
+    box-shadow: 0 16px 48px var(--shadow-color);
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    transition: all 0.5s ease;
+    animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   Auth Pages: Ambient Background + Floating Labels + Micro-interactions
+   ========================================================================== */
+
+.auth-ambient {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.auth-ambient::before,
+.auth-ambient::after {
+    content: "";
+    position: absolute;
+    width: 60vmax;
+    height: 60vmax;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.35;
+    pointer-events: none;
+    animation: floatBlob 16s ease-in-out infinite alternate;
+}
+
+.auth-ambient::before {
+    background: radial-gradient(closest-side, rgba(var(--primary-color-rgb), 0.6), transparent 70%);
+    top: -20vmax;
+    left: -10vmax;
+}
+
+.auth-ambient::after {
+    background: radial-gradient(closest-side, rgba(255, 149, 0, 0.5), transparent 70%);
+    bottom: -25vmax;
+    right: -15vmax;
+    animation-delay: 0.6s;
+}
+
+@keyframes floatBlob {
+    from { transform: translateY(-10px) translateX(0) scale(1); }
+    to { transform: translateY(10px) translateX(10px) scale(1.05); }
+}
+
+.auth-card {
+    position: relative;
+    backdrop-filter: saturate(120%);
+}
+
+.auth-subtitle {
+    color: var(--text-color-secondary);
+    margin-top: -0.5rem;
+    margin-bottom: 2rem;
+}
+
+.stagger > * { opacity: 0; animation: slideInUp 0.5s ease forwards; }
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger > *:nth-child(9) { animation-delay: 0.45s; }
+.stagger > *:nth-child(10) { animation-delay: 0.5s; }
+
+.input-group {
+    position: relative;
+    display: block;
+    margin-bottom: 1.25rem;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    background: var(--background-color);
+    position: relative;
+    z-index: 1;
+}
+
+.input-group .focus-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    pointer-events: none;
+    box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.0);
+    transition: box-shadow 0.25s ease;
+    z-index: 0;
+}
+
+.input-group:focus-within .focus-ring {
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.15);
+}
+
+/* Floating labels */
+.floating label {
+    position: absolute;
+    top: 50%;
+    left: 1.2rem;
+    transform: translateY(-50%);
+    background: var(--surface-color);
+    padding: 0 0.25rem;
+    color: var(--text-color-secondary);
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.floating input,
+.floating select,
+.floating textarea {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.floating textarea {
+    min-height: 110px;
+}
+
+.floating input::placeholder,
+.floating textarea::placeholder { color: transparent; }
+
+/* Ensure placeholder baseline is vertically centered across browsers */
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-color-secondary);
+    opacity: 0.7;
+}
+
+.floating input:focus + label,
+.floating textarea:focus + label,
+.floating input:not(:placeholder-shown) + label,
+.floating textarea:not(:placeholder-shown) + label {
+    top: 0.2rem;
+    transform: none;
+    font-size: 0.75rem;
+    color: var(--primary-color);
+}
+
+/* Support select and date controls for floating labels */
+.floating select:focus + label,
+.floating select:valid + label {
+    top: 0.2rem;
+    transform: none;
+    font-size: 0.75rem;
+    color: var(--primary-color);
+}
+
+/* Date input fallback when placeholder-shown is inconsistent across browsers */
+.floating input[type="date"]:not(:focus):invalid + label {
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+.floating input[type="date"]:focus + label,
+.floating input[type="date"]:valid + label {
+    top: 0.2rem;
+    transform: none;
+    font-size: 0.75rem;
+    color: var(--primary-color);
+}
+
+.form-footer a { position: relative; }
+.form-footer a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -2px; right: 0;
+    height: 2px; border-radius: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+.form-footer a:hover::after { transform: scaleX(1); }
+
+/* Wider card for long forms */
+.auth-card.wide { max-width: 720px; }
+
+@media (min-width: 900px) {
+    .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem 1.25rem;
+    }
+    .two-col .full { grid-column: 1 / -1; }
+}
+
+/* ==========================================================================
+   Typography & Links
+   ========================================================================== */
+
+h1, h2 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+}
+
+h1 {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    filter: brightness(1.1);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Forms & Buttons
+   ========================================================================== */
+
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+/* Normalize common input types to avoid distorted boxes */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Manrope', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.15);
+    background-color: var(--surface-color);
+}
+
+/* Remove number input spinners for consistent visuals */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
+
+/* Normalize date input visuals */
+input[type="date"] { line-height: 1.2; }
+input[type="date"]::-webkit-datetime-edit { padding: 0; }
+input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.8; cursor: pointer; }
+
+.btn {
+    background: linear-gradient(115deg, var(--primary-color), var(--accent-color));
+    color: #ffffff;
+    border: none;
+    padding: 1rem 1.8rem;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.2s ease;
+    text-transform: uppercase;
+    box-shadow: 0 10px 24px rgba(var(--primary-color-rgb), 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 0 14px 28px rgba(var(--primary-color-rgb), 0.3);
+    filter: brightness(1.03);
+}
+
+.btn:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 8px 16px rgba(var(--primary-color-rgb), 0.25);
+}
+
+.form-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+/* ==========================================================================
+   Dashboards & Theme Switcher
+   ========================================================================== */
+
+.dashboard-container {
+    max-width: 1200px;
+    text-align: left;
+    padding: 2rem;
+}
+
+.dashboard-tabs {
+    display: inline-flex;
+    gap: 0.6rem;
+    background: var(--background-color);
+    padding: 0.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.tab-link.pill {
+    border: none;
+    background: transparent;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.tab-link.pill.active {
+    background: var(--surface-color);
+    color: var(--text-color);
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-switcher {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.theme-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.theme-btn:hover {
+    transform: scale(1.15) rotate(15deg);
+    border-color: var(--primary-color);
+}
+.theme-btn.active {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.theme-btn[data-theme="daylight"] { background: linear-gradient(45deg, #F9F9F9, #EAEAEA); }
+.theme-btn[data-theme="midnight"] { background: linear-gradient(45deg, #121212, #1E1E1E); }
+.theme-btn[data-theme="crimson-night"] { background: linear-gradient(45deg, #1A1A1A, #2C2C2C); }
+.theme-btn[data-theme="arctic-mist"] { background: linear-gradient(45deg, #F0F4F8, #DDE4E9); }
+
+/* ==========================================================================
+   Chat Interface
+   ========================================================================== */
+
+#chat-container {
+    margin-top: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+    overflow: hidden;
+    background-color: var(--background-color);
+    box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+#chat-history {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--surface-color);
+}
+
+.chat-message {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    animation: slideInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.chat-message .bubble {
+    padding: 1rem 1.5rem;
+    border-radius: 22px;
+    max-width: 80%;
+    line-height: 1.5;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.chat-message.user {
+    align-items: flex-end;
+}
+.chat-message.user .bubble {
+    background: var(--primary-color);
+    color: #fff;
+    border-bottom-right-radius: 6px;
+}
+
+.chat-message.ai {
+    align-items: flex-start;
+}
+.chat-message.ai .bubble {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-bottom-left-radius: 6px;
+}
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.typing-indicator.active {
+    opacity: 1;
+    transform: scale(1);
+}
+.typing-indicator span {
+    height: 10px;
+    width: 10px;
+    background-color: var(--text-color-secondary);
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 3px;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--surface-color);
+}
+
+#chat-input {
+    flex-grow: 1;
+    margin-bottom: 0;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#send-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: var(--primary-color);
+}
+#send-button:hover {
+    filter: brightness(1.1);
+}
+
+/* ==========================================================================
+   Doctor Dashboard Specifics
+   ========================================================================== */
+
+.doctor-dashboard-layout {
+    display: flex;
+    gap: 2rem;
+}
+
+#patient-list-container {
+    flex: 0 0 300px;
+    background: var(--surface-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    height: calc(80vh - 100px);
+    overflow-y: auto;
+}
+
+#patient-list ul {
+    list-style: none;
+}
+
+#patient-list li a {
+    display: block;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-weight: 600;
+}
+#patient-list li a:hover {
+    background-color: var(--background-color);
+    text-decoration: none;
+    transform: translateX(5px);
+}
+#patient-list li a.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(var(--primary-color-rgb), 0.2);
+}
+
+#patient-details-container {
+    flex-grow: 1;
+}
+
+#patient-details {
+    padding: 2rem;
+    background-color: var(--surface-color);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    min-height: calc(80vh - 100px);
+}
+
+#patient-details h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.chart-container {
+    margin-top: 2rem;
+    height: 350px;
+    width: 100%;
+}
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-card {
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 16px var(--shadow-color);
+}
+
+.chart-card .ct-chart,
+.chart-card canvas,
+.chart-card div[id$='Chart'] {
+    width: 100%;
+    height: 300px;
+}
+
+.chart-card h4 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    margin: 0.25rem;
+}
