@@ -27,6 +27,13 @@ pro_model = genai.GenerativeModel('gemini-2.5-pro')
 app = Flask(__name__)
 app.secret_key = flask_secret_key
 
+# Load the system prompt from the file
+try:
+    with open('system_prompt.md', 'r') as f:
+        system_prompt = f.read()
+except FileNotFoundError:
+    system_prompt = "You are a helpful assistant." # Fallback prompt
+
 # Security helper functions
 def sanitize_input(text):
     if not text:
@@ -186,7 +193,8 @@ def chat():
         user_info = admin_auth.verify_id_token(session['user'])
         uid = user_info['uid']
         chat_history = db_ref.child("chats").child(uid).get() or []
-        prompt = f"You are a friendly AI assistant. Patient: {user_message}\nAI:"
+        # Construct a more sophisticated prompt using the system prompt
+        prompt = f"{system_prompt}\n\nHere is the conversation history (if any):\n{json.dumps(chat_history, indent=2)}\n\nPatient's new message: \"{user_message}\"\n\nAI:"
         response = flash_model.generate_content(prompt)
         ai_message = response.text
         chat_history.append({"user": user_message, "ai": ai_message})
@@ -219,45 +227,8 @@ def analyze_chats(patient_uid):
             })
 
         chat_history_json = json.dumps(chat_history, ensure_ascii=False)
-        prompt_tpl = Template(
-            """
-You are assisting a clinician by analyzing a patient's chat conversation with an AI support assistant.
-Output a single JSON object with EXACTLY these keys and shapes:
-
-- "summary": string – a concise, professional summary (5-8 sentences) focusing on emotional state, risks, and guidance for clinician follow-up.
-
-- "moodTimeline": object – line chart of mood over time
-  {"labels": ["2025-08-09T10:01:00Z", "2025-08-09T11:07:00Z"], "data": [-0.2, 0.4]}
-
-- "activity": object – messages per day
-  {"labels": ["2025-08-08", "2025-08-09"], "data": [3, 7]}
-
-- "urgencyDistribution": object – doughnut chart
-  {"labels": ["Low","Medium","High"], "data": [70, 25, 5]}
-
-- "emotionRadar": object – radar chart
-  {"labels": ["Joy","Anger","Sadness","Anxiety","Surprise"], "data": [6, 2, 4, 5, 3]}
-
-- "highlights": array of 5-10 key messages
-  [{"message": "text", "reason": "why notable", "timestamp": "2025-08-09T10:01:00Z"}]
-
-- "criticalFlags": array of messages needing attention (self-harm, suicidal ideation, panic, severe depression, withdrawal)
-  [{"message": "text", "category": "Self-harm", "severity": 85, "timestamp": "2025-08-09T11:07:00Z"}]
-
-- "keywords": array – common terms/phrases
-  [{"term": "sleep", "count": 5}]
-
-- "emojiCloud": array – emojis and counts
-  [{"emoji": "😊", "count": 4}]
-
-IMPORTANT:
-- Return ONLY the JSON (no commentary, code fences, or markdown).
-- If something is unavailable, return an empty array/object for that field.
-
-Chat Conversation (oldest first):
-$CHAT
-"""
-        )
+        # Use the system prompt for analysis
+        prompt_tpl = Template(system_prompt)
         prompt = prompt_tpl.substitute(CHAT=chat_history_json)
         response = pro_model.generate_content(prompt)
         raw = response.text.strip()
